@@ -10,10 +10,11 @@ import GuidePage from './pages/GuidePage'
 import './App.css'
 
 function App() {
+  // 로딩 상태
   const [isLoading, setIsLoading] = useState(true)
 
+  // 초기화 작업
   useEffect(() => {
-    // 앱 초기화 로직
     setIsLoading(false)
   }, [])
 
