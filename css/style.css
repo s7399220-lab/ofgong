@@ -1,0 +1,206 @@
+/* 전체에서 공통으로 쓰는 색상, 폰트 변수 */
+:root {
+  --bg: #f8f7f4;
+  --surface: #ffffff;
+  --primary: #1a3353;
+  --accent: #e8622a;
+  --text: #1c1c1c;
+  --muted: #6b6b6b;
+  --border: #e2e0db;
+  --radius: 12px;
+  --font-body: 'Noto Sans KR', sans-serif;
+  --font-display: 'DM Serif Display', serif;
+}
+
+/* 기본 초기화 */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+/* 상단 헤더 - 스크롤해도 고정 */
+.header {
+  background: var(--primary);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.nav { display: flex; gap: 8px; }
+.nav-link {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+.nav-link:hover, .nav-link.active {
+  color: #fff;
+  background: rgba(255,255,255,0.15);
+}
+
+/* 타이틀 히어로 영역 */
+.hero {
+  background: var(--primary);
+  padding: 64px 24px 72px;
+  color: #fff;
+}
+.hero-inner { max-width: 1100px; margin: 0 auto; }
+.hero-tag {
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.25;
+  margin-bottom: 20px;
+}
+.hero-desc {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.7);
+  max-width: 500px;
+}
+
+/* 필터 바 - 헤더 아래 고정 */
+.filter-section {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  position: sticky;
+  top: 60px;
+  z-index: 90;
+}
+.filter-bar {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.filter-select {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  background: var(--bg);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.filter-select:focus { border-color: var(--primary); }
+.filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  color: var(--muted);
+}
+.filter-toggle input { accent-color: var(--accent); }
+
+/* 카드 그리드 레이아웃 */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* 전형 카드 */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+.card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+.card-univ {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.card-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.tag {
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: #eef2f7;
+  color: var(--primary);
+  font-weight: 500;
+}
+/* 수능 최저 있는 경우 주황색으로 강조 */
+.tag.accent { background: #fdf0ea; color: var(--accent); }
+.card-info { font-size: 0.85rem; color: var(--muted); }
+.card-info span { display: block; margin-bottom: 3px; }
+
+/* 변경된 전형 표시 뱃지 */
+.badge-changed {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+/* 검색 결과 없을 때 */
+.no-result {
+  text-align: center;
+  color: var(--muted);
+  padding: 60px 0;
+}
+
+/* 하단 푸터 */
+.footer {
+  text-align: center;
+  padding: 32px 24px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+
+/* 모바일 대응 */
+@media (max-width: 600px) {
+  .filter-bar { flex-direction: column; align-items: stretch; }
+  .filter-select { width: 100%; }
+}

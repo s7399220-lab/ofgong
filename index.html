@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OFGONG — 2028 대입전형 가이드</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- 상단 네비게이션 -->
+  <header class="header">
+    <div class="header-inner">
+      <nav class="nav">
+        <a href="index.html" class="nav-link active">전형 탐색</a>
+        <a href="compare.html" class="nav-link">전형 비교</a>
+        <a href="guide.html" class="nav-link">개념 해설</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 메인 타이틀 영역 -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-tag">2028학년도 대입전형 가이드</p>
+      <h1 class="hero-title">복잡한 2028 대입,<br>한눈에 파악하세요.</h1>
+      <p class="hero-desc">고교학점제·5등급제 시대의 전형 정보를 대학 공식 자료 기반으로 정리했습니다.</p>
+    </div>
+  </section>
+
+  <!-- 필터 선택 영역 -->
+  <section class="filter-section">
+    <div class="container">
+      <div class="filter-bar">
+        <select id="filter-type" class="filter-select">
+          <option value="">전형 유형 전체</option>
+          <option value="수시">수시</option>
+          <option value="정시">정시</option>
+        </select>
+        <select id="filter-method" class="filter-select">
+          <option value="">전형 방식 전체</option>
+          <option value="교과">학생부교과</option>
+          <option value="종합">학생부종합</option>
+          <option value="논술">논술</option>
+          <option value="수능">수능</option>
+        </select>
+        <select id="filter-suneung" class="filter-select">
+          <option value="">수능 최저 전체</option>
+          <option value="있음">수능 최저 있음</option>
+          <option value="없음">수능 최저 없음</option>
+        </select>
+        <label class="filter-toggle">
+          <input type="checkbox" id="filter-changed" />
+          <span>변경 전형만 보기</span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- 전형 카드 목록 (JS에서 동적으로 생성) -->
+  <main class="container">
+    <div id="card-grid" class="card-grid"></div>
+    <p id="no-result" class="no-result" style="display:none;">조건에 맞는 전형이 없습니다.</p>
+  </main>
+
+  <!-- 하단 출처 안내 -->
+  <footer class="footer">
+    <p>본 정보는 각 대학 공식 공시 자료(2028학년도 입학전형시행계획) 기반이며 참고용입니다. 합격을 보장하지 않습니다.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

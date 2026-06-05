@@ -1,0 +1,24 @@
+[
+  {
+    "university": "서울대학교",
+    "name": "지역균형전형",
+    "type": "수시",
+    "method": "종합",
+    "quota": 400,
+    "interview": "있음",
+    "suneung": "없음",
+    "changed": false,
+    "changedNote": ""
+  },
+  {
+    "university": "서울대학교",
+    "name": "일반전형",
+    "type": "수시",
+    "method": "종합",
+    "quota": 1500,
+    "interview": "있음",
+    "suneung": "없음",
+    "changed": false,
+    "changedNote": ""
+  }
+]
