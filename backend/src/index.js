@@ -6,19 +6,20 @@ const routes = require('./routes');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
+// cors 활성화
 app.use(cors());
+// json 파싱
 app.use(express.json());
 
-// Routes
+// api 라우트
 app.use('/api', routes);
 
-// Health check
+// 헬스체크
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-// Error handling
+// 에러 처리
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({
@@ -26,6 +27,7 @@ app.use((err, req, res, next) => {
   });
 });
 
+// 서버 시작
 app.listen(PORT, () => {
   console.log(`OFGONG Backend running on http://localhost:${PORT}`);
 });
