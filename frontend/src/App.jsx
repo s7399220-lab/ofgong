@@ -13,7 +13,7 @@ function App() {
   // 로딩 상태
   const [isLoading, setIsLoading] = useState(true)
 
-  // 초기화 작업
+  // 초기화
   useEffect(() => {
     setIsLoading(false)
   }, [])
