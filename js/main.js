@@ -44,12 +44,63 @@ function render(data) {
         <span>면접: ${item.interview}</span>
         ${item.changed ? `<span style="color:var(--accent)">📌 ${item.changedNote}</span>` : ''}
       </div>
-      <button class="btn-compare ${isAdded ? 'added' : ''}" onclick="toggleCompare(${realIndex})">
-        ${isAdded ? '✓ 비교 추가됨' : '+ 비교에 추가'}
-      </button>
+      <div class="card-actions">
+        <button class="btn-compare ${isAdded ? 'added' : ''}" onclick="toggleCompare(${realIndex})">
+          ${isAdded ? '✓ 비교 추가됨' : '+ 비교에 추가'}
+        </button>
+        <button class="btn-ai-explain" onclick="showAIExplain(${realIndex}, this)">
+          ✦ AI 해설
+        </button>
+      </div>
+      <div class="ai-explain-box" id="explain-${realIndex}" style="display:none;"></div>
     `;
     grid.appendChild(card);
   });
+}
+
+// AI 전형 해설 생성
+async function showAIExplain(index, btn) {
+  const item = allData[index];
+  const box = document.getElementById(`explain-${index}`);
+
+  // 이미 열려있으면 닫기
+  if (box.style.display === 'block') {
+    box.style.display = 'none';
+    btn.textContent = '✦ AI 해설';
+    return;
+  }
+
+  btn.textContent = '생성 중...';
+  btn.disabled = true;
+  box.style.display = 'block';
+  box.innerHTML = '<span style="color:var(--muted); font-size:0.82rem;">AI가 해설을 작성하고 있어요...</span>';
+
+  const prompt = `당신은 2028 대입전형 전문가입니다. 다음 전형에 대해 고등학생이 이해하기 쉽게 해설해 주세요.
+
+대학: ${item.university}
+전형명: ${item.name}
+전형유형: ${item.type}
+전형방식: ${item.method}
+모집인원: ${item.quota}명
+면접: ${item.interview}
+수능최저: ${item.suneung}
+변경사항: ${item.changedNote || '없음'}
+
+다음 세 가지 항목으로 200자 이내로 간결하게 설명해 주세요.
+1. 이 전형의 핵심 특징
+2. 유리한 학생 유형
+3. 주의할 점
+합격 보장이나 수치 예측은 하지 마세요.`;
+
+  try {
+    const reply = await callGemini(prompt);
+    box.innerHTML = parseMarkdown(reply);
+  } catch (e) {
+    box.innerHTML = '<span style="color:var(--muted);">해설을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.</span>';
+  }
+
+  btn.textContent = '✦ AI 해설 닫기';
+  btn.disabled = false;
 }
 
 // 비교 목록에 추가/제거
@@ -86,8 +137,6 @@ function applyFilter() {
   const changed = document.getElementById('filter-changed').checked;
 
   let result = allData;
-
-  // 대학명 검색 (입력값이 포함된 대학만 표시)
   if (search) result = result.filter(d => d.university.includes(search));
   if (type) result = result.filter(d => d.type === type);
   if (method) result = result.filter(d => d.method.includes(method));

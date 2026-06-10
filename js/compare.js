@@ -31,10 +31,8 @@ function renderTable() {
   btnWrap.style.display = 'flex';
   analysisBox.style.display = 'none';
 
-  // 비교할 전형 데이터
   const items = compareList.map(i => allData[i]);
 
-  // 비교 항목 목록
   const rows = [
     { label: '대학', key: 'university' },
     { label: '전형명', key: 'name' },
@@ -71,72 +69,42 @@ function renderTable() {
   table.innerHTML = html;
 }
 
-// 규칙 기반 전형 분석 해설 생성
-function analyzeCompare() {
+// Gemini 기반 비교 분석 해설
+async function analyzeCompare() {
   const items = compareList.map(i => allData[i]);
   const box = document.getElementById('analysis-box');
-  const lines = [];
+  const btn = document.querySelector('.btn-analyze');
 
-  // 선택 전형 수
-  lines.push(`<p>📋 <strong>${items.length}개 전형</strong>을 비교 분석한 결과입니다.</p>`);
-
-  // 수능 최저 분석
-  const withMin = items.filter(i => i.suneung === '있음');
-  const withoutMin = items.filter(i => i.suneung === '없음');
-  if (withMin.length > 0 && withoutMin.length > 0) {
-    lines.push(`<p>📌 수능 최저가 <strong>있는 전형</strong>: ${withMin.map(i => `${i.university} ${i.name}`).join(', ')} — 수능 준비가 병행되어야 합니다.</p>`);
-    lines.push(`<p>✅ 수능 최저가 <strong>없는 전형</strong>: ${withoutMin.map(i => `${i.university} ${i.name}`).join(', ')} — 내신·서류 준비에 집중할 수 있습니다.</p>`);
-  } else if (withMin.length === items.length) {
-    lines.push(`<p>⚠️ 선택한 전형 <strong>모두 수능 최저학력기준이 있습니다.</strong> 수능 준비를 반드시 병행해야 합니다.</p>`);
-  } else {
-    lines.push(`<p>✅ 선택한 전형 <strong>모두 수능 최저학력기준이 없습니다.</strong> 내신·서류 준비에 집중할 수 있습니다.</p>`);
-  }
-
-  // 면접 분석
-  const withInterview = items.filter(i => i.interview === '있음');
-  if (withInterview.length > 0) {
-    lines.push(`<p>🎤 면접이 있는 전형: <strong>${withInterview.map(i => `${i.university} ${i.name}`).join(', ')}</strong> — 면접 대비가 필요합니다.</p>`);
-  } else {
-    lines.push(`<p>✅ 선택한 전형 모두 면접이 없습니다.</p>`);
-  }
-
-  // 전형 방식별 분석
-  const methods = {};
-  items.forEach(i => {
-    methods[i.method] = (methods[i.method] || []);
-    methods[i.method].push(`${i.university} ${i.name}`);
-  });
-  const methodKeys = Object.keys(methods);
-  if (methodKeys.length > 1) {
-    lines.push(`<p>📚 다양한 전형 방식이 포함되어 있습니다: <strong>${methodKeys.join(', ')}</strong> — 각 전형에 맞는 준비 전략이 필요합니다.</p>`);
-  } else {
-    lines.push(`<p>📚 선택한 전형은 모두 <strong>${methodKeys[0]}</strong> 방식입니다.</p>`);
-  }
-
-  // 모집인원 분석
-  const maxItem = items.reduce((a, b) => a.quota > b.quota ? a : b);
-  const minItem = items.reduce((a, b) => a.quota < b.quota ? a : b);
-  if (maxItem !== minItem) {
-    lines.push(`<p>👥 모집인원이 가장 많은 전형은 <strong>${maxItem.university} ${maxItem.name}(${maxItem.quota}명)</strong>, 가장 적은 전형은 <strong>${minItem.university} ${minItem.name}(${minItem.quota}명)</strong>입니다.</p>`);
-  }
-
-  // 변경사항 분석
-  const changed = items.filter(i => i.changed);
-  if (changed.length > 0) {
-    lines.push(`<p>🔄 2027 대비 변경된 전형: <strong>${changed.map(i => `${i.university} ${i.name}`).join(', ')}</strong> — 변경사항을 반드시 확인하세요.</p>`);
-  }
-
-  // 수시/정시 혼합 여부
-  const types = [...new Set(items.map(i => i.type))];
-  if (types.length === 2) {
-    lines.push(`<p>💡 수시와 정시 전형이 함께 포함되어 있습니다. 수시 지원 시 정시 준비도 병행하는 전략을 고려해보세요.</p>`);
-  }
-
-  // 면책 고지
-  lines.push(`<p class="analysis-disclaimer">※ 위 해설은 공시 자료 기반의 참고 정보입니다. 최종 지원 결정은 담임 선생님 또는 진학 상담 교사와 상의하세요.</p>`);
-
-  box.innerHTML = `<h3>📊 전형 분석 해설</h3>${lines.join('')}`;
+  btn.textContent = '분석 중...';
+  btn.disabled = true;
   box.style.display = 'block';
+  box.innerHTML = '<h3>📊 AI 전형 분석 해설</h3><p style="color:var(--muted);">AI가 비교 분석을 작성하고 있어요...</p>';
+
+  const prompt = `당신은 2028 대입전형 전문가입니다. 다음 전형들을 비교 분석해 주세요.
+
+[비교 전형 목록]
+${items.map((item, i) => `${i + 1}. ${item.university} ${item.name} (${item.type}, ${item.method}, 모집인원 ${item.quota}명, 면접 ${item.interview}, 수능최저 ${item.suneung}${item.changed ? ', 변경: ' + item.changedNote : ''})`).join('\n')}
+
+다음 항목으로 분석해 주세요:
+1. 전형들의 공통점과 차이점
+2. 수능 최저 및 면접 부담 비교
+3. 각 전형이 유리한 학생 유형
+4. 변경사항 중 주의할 점
+5. 전반적인 지원 전략 조언
+
+친절하고 이해하기 쉽게 설명하고, 합격 보장이나 수치 예측은 하지 마세요.
+마지막에 "최종 결정은 담임 선생님과 상의하세요"를 포함해 주세요.`;
+
+  try {
+    const reply = await callGemini(prompt);
+    box.innerHTML = `<h3>📊 AI 전형 분석 해설</h3>${parseMarkdown(reply)}
+      <p class="analysis-disclaimer">※ 위 해설은 AI가 생성한 참고 정보입니다. 최종 지원 결정은 담임 선생님 또는 진학 상담 교사와 상의하세요.</p>`;
+  } catch (e) {
+    box.innerHTML = '<h3>📊 AI 전형 분석 해설</h3><p style="color:var(--muted);">분석을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.</p>';
+  }
+
+  btn.textContent = '📊 AI 분석 해설 보기';
+  btn.disabled = false;
   box.scrollIntoView({ behavior: 'smooth' });
 }
 

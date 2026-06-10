@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 상담 — 2028 대입전형 가이드</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- 상단 네비게이션 -->
+  <header class="header">
+    <div class="header-inner">
+      <nav class="nav">
+        <a href="index.html" class="nav-link">전형 탐색</a>
+        <a href="compare.html" class="nav-link">전형 비교</a>
+        <a href="guide.html" class="nav-link">개념 해설</a>
+        <a href="chatbot.html" class="nav-link active">AI 상담</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 히어로 -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-tag">AI 입시 상담</p>
+      <h1 class="hero-title">2028 대입, 무엇이든<br>물어보세요.</h1>
+      <p class="hero-desc">전형 선택, 과목 이수, 수능 전략 등 궁금한 점을 AI에게 질문해 보세요.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="chatbot-wrap">
+
+      <!-- 추천 질문 -->
+      <div class="suggest-wrap" id="suggest-wrap">
+        <p class="suggest-label">이런 질문을 해보세요</p>
+        <div class="suggest-list">
+          <button class="suggest-btn" onclick="fillQuestion('일반고 학생인데 수능 최저 없는 학생부종합 전형이 어디 있나요?')">일반고 학생인데 수능 최저 없는 학종 전형은?</button>
+          <button class="suggest-btn" onclick="fillQuestion('5등급제에서 내신 B등급이면 대학 지원에 불리한가요?')">내신 B등급이면 불리한가요?</button>
+          <button class="suggest-btn" onclick="fillQuestion('2028 수능에서 미적분2가 빠진 이유가 뭔가요?')">수능에서 미적분2가 빠진 이유는?</button>
+          <button class="suggest-btn" onclick="fillQuestion('고교학점제에서 진로선택 과목을 어떻게 골라야 하나요?')">진로선택 과목 고르는 방법은?</button>
+          <button class="suggest-btn" onclick="fillQuestion('서울대 정시에서 내신이 왜 중요해졌나요?')">서울대 정시에서 내신이 왜 중요해졌나요?</button>
+          <button class="suggest-btn" onclick="fillQuestion('논술전형을 준비하려면 어떻게 해야 하나요?')">논술전형 준비 방법은?</button>
+        </div>
+      </div>
+
+      <!-- 대화창 -->
+      <div class="chat-window" id="chat-window">
+        <div class="chat-msg bot">
+          <div class="chat-bubble">
+            안녕하세요! 저는 2028 대입전형 AI 상담사예요.<br>
+            전형 선택, 내신 5등급제, 수능 개편, 고교학점제 등 궁금한 점을 무엇이든 질문해 주세요 😊<br><br>
+            <strong>⚠️ 주의:</strong> AI 답변은 참고용이며, 최종 결정은 반드시 담임 선생님 또는 진학 상담 교사와 상의하세요.
+          </div>
+        </div>
+      </div>
+
+      <!-- 입력창 -->
+      <div class="chat-input-wrap">
+        <input
+          type="text"
+          id="chat-input"
+          class="chat-input"
+          placeholder="질문을 입력하세요..."
+          onkeydown="if(event.key==='Enter') sendMessage()"
+        />
+        <button class="chat-send-btn" onclick="sendMessage()">전송</button>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>AI 답변은 참고용입니다. 합격을 보장하지 않으며 최종 판단은 전문가와 상의하세요.</p>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/gemini.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+</html>

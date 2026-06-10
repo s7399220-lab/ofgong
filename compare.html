@@ -19,6 +19,7 @@
           전형 비교 <span id="compare-badge" class="compare-badge" style="display:none;">0</span>
         </a>
         <a href="guide.html" class="nav-link">개념 해설</a>
+        <a href="chatbot.html" class="nav-link nav-ai">✦ AI 상담</a>
       </nav>
     </div>
   </header>
@@ -46,8 +47,8 @@
     </div>
 
     <!-- 버튼 영역 -->
-    <div id="btn-wrap" style="display:none; margin-top:24px; display:none; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-      <button class="btn-analyze" onclick="analyzeCompare()">📊 전형 분석 해설 보기</button>
+    <div id="btn-wrap" style="display:none; margin-top:24px; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <button class="btn-analyze" onclick="analyzeCompare()">📊 AI 분석 해설 보기</button>
       <button class="btn-clear" onclick="clearAll()">비교 목록 초기화</button>
     </div>
 
@@ -60,6 +61,8 @@
     <p>본 정보는 각 대학 공식 공시 자료(2028학년도 입학전형시행계획) 기반이며 참고용입니다. 합격을 보장하지 않습니다.</p>
   </footer>
 
+  <script src="js/config.js"></script>
+  <script src="js/gemini.js"></script>
   <script src="js/compare.js"></script>
 </body>
 </html>

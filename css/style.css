@@ -638,3 +638,162 @@ body {
   border: 1px solid #a7f3d0;
   font-weight: 500;
 }
+/* AI 상담 네비게이션 버튼 */
+.nav-ai {
+  background: rgba(255,255,255,0.15);
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+.nav-ai:hover { background: rgba(255,255,255,0.25) !important; }
+
+/* 카드 액션 버튼 영역 */
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.btn-compare { flex: 1; margin-top: 0; }
+
+/* AI 해설 버튼 */
+.btn-ai-explain {
+  flex: 1;
+  padding: 7px;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.btn-ai-explain:hover { background: var(--primary); color: #fff; }
+.btn-ai-explain:disabled { opacity: 0.6; cursor: wait; }
+
+/* AI 해설 박스 (카드 내부) */
+.ai-explain-box {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #f0fdf4;
+  border-left: 3px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.82rem;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+/* 챗봇 레이아웃 */
+.chatbot-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* 추천 질문 */
+.suggest-label {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.suggest-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.suggest-btn {
+  font-size: 0.8rem;
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: var(--font-body);
+}
+.suggest-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+/* 대화창 */
+.chat-window {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  height: 440px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+/* 말풍선 */
+.chat-msg { display: flex; }
+.chat-msg.user { justify-content: flex-end; }
+.chat-msg.bot { justify-content: flex-start; }
+.chat-bubble {
+  max-width: 75%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+.chat-msg.user .chat-bubble {
+  background: var(--primary);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.chat-msg.bot .chat-bubble {
+  background: #f0fdf4;
+  color: var(--text);
+  border-bottom-left-radius: 4px;
+  border: 1px solid #a7f3d0;
+}
+
+/* 로딩 애니메이션 */
+.dots {
+  display: inline-block;
+  animation: blink 1.2s infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* 입력창 */
+.chat-input-wrap {
+  display: flex;
+  gap: 8px;
+}
+.chat-input {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.18s;
+}
+.chat-input:focus { border-color: var(--primary); }
+.chat-send-btn {
+  padding: 10px 24px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.chat-send-btn:hover { background: var(--primary-dark); }
+
+/* 모바일 대응 */
+@media (max-width: 600px) {
+  .chat-window { height: 340px; }
+  .chat-bubble { max-width: 88%; }
+  .card-actions { flex-direction: column; }
+}
