@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>전형 비교 — 2028 대입전형 가이드</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- 상단 네비게이션 -->
+  <header class="header">
+    <div class="header-inner">
+      <nav class="nav">
+        <a href="index.html" class="nav-link">전형 탐색</a>
+        <a href="compare.html" class="nav-link active">
+          전형 비교 <span id="compare-badge" class="compare-badge" style="display:none;">0</span>
+        </a>
+        <a href="guide.html" class="nav-link">개념 해설</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 페이지 타이틀 -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-tag">전형 비교</p>
+      <h1 class="hero-title">전형을 나란히<br>비교해보세요.</h1>
+      <p class="hero-desc">최대 5개 전형을 선택해 한눈에 비교할 수 있어요.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- 비교 목록이 비어있을 때 -->
+    <div id="empty-msg" class="no-result">
+      <p>비교할 전형이 없어요.</p>
+      <a href="index.html" style="color:var(--primary); font-weight:700;">← 전형 탐색으로 돌아가기</a>
+    </div>
+
+    <!-- 비교표 -->
+    <div id="compare-table-wrap" style="display:none; overflow-x:auto;">
+      <table id="compare-table" class="compare-table"></table>
+    </div>
+
+    <!-- 전체 초기화 버튼 -->
+    <div id="clear-wrap" style="display:none; margin-top:24px; text-align:right;">
+      <button class="btn-clear" onclick="clearAll()">비교 목록 초기화</button>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>본 정보는 각 대학 공식 공시 자료(2028학년도 입학전형시행계획) 기반이며 참고용입니다. 합격을 보장하지 않습니다.</p>
+  </footer>
+
+  <script src="js/compare.js"></script>
+</body>
+</html>

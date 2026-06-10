@@ -1,11 +1,15 @@
 // 전체 데이터를 담는 배열
 let allData = [];
 
+// 비교 목록 (최대 5개)
+let compareList = JSON.parse(localStorage.getItem('compareList') || '[]');
+
 // JSON 파일에서 데이터 불러오기
 async function loadData() {
   const res = await fetch('data/universities.json');
   allData = await res.json();
   render(allData);
+  updateCompareBadge();
 }
 
 // 카드 목록 화면에 그리기
@@ -20,7 +24,11 @@ function render(data) {
   }
   noResult.style.display = 'none';
 
-  data.forEach(item => {
+  data.forEach((item) => {
+    // 전체 데이터에서 원래 인덱스 찾기
+    const realIndex = allData.indexOf(item);
+    const isAdded = compareList.includes(realIndex);
+
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
@@ -37,9 +45,38 @@ function render(data) {
         <span>면접: ${item.interview}</span>
         ${item.changed ? `<span style="color:var(--accent)">📌 ${item.changedNote}</span>` : ''}
       </div>
+      <button class="btn-compare ${isAdded ? 'added' : ''}" onclick="toggleCompare(${realIndex})">
+        ${isAdded ? '✓ 비교 추가됨' : '+ 비교에 추가'}
+      </button>
     `;
     grid.appendChild(card);
   });
+}
+
+// 비교 목록에 추가/제거
+function toggleCompare(index) {
+  if (compareList.includes(index)) {
+    compareList = compareList.filter(i => i !== index);
+  } else {
+    if (compareList.length >= 5) {
+      alert('최대 5개까지 비교할 수 있어요.');
+      return;
+    }
+    compareList.push(index);
+  }
+  // 로컬스토리지에 저장해서 페이지 이동 후에도 유지
+  localStorage.setItem('compareList', JSON.stringify(compareList));
+  updateCompareBadge();
+  applyFilter();
+}
+
+// 상단 비교 버튼 뱃지 업데이트
+function updateCompareBadge() {
+  const badge = document.getElementById('compare-badge');
+  if (badge) {
+    badge.textContent = compareList.length;
+    badge.style.display = compareList.length > 0 ? 'inline-block' : 'none';
+  }
 }
 
 // 필터 조건에 맞게 데이터 걸러내기
