@@ -33,6 +33,7 @@
   </section>
 
   <main class="container">
+
     <!-- 비교 목록이 비어있을 때 -->
     <div id="empty-msg" class="no-result">
       <p>비교할 전형이 없어요.</p>
@@ -44,10 +45,15 @@
       <table id="compare-table" class="compare-table"></table>
     </div>
 
-    <!-- 전체 초기화 버튼 -->
-    <div id="clear-wrap" style="display:none; margin-top:24px; text-align:right;">
+    <!-- 버튼 영역 -->
+    <div id="btn-wrap" style="display:none; margin-top:24px; display:none; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <button class="btn-analyze" onclick="analyzeCompare()">📊 전형 분석 해설 보기</button>
       <button class="btn-clear" onclick="clearAll()">비교 목록 초기화</button>
     </div>
+
+    <!-- AI 해설 결과 영역 -->
+    <div id="analysis-box" class="analysis-box" style="display:none;"></div>
+
   </main>
 
   <footer class="footer">

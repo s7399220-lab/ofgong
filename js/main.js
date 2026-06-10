@@ -25,7 +25,6 @@ function render(data) {
   noResult.style.display = 'none';
 
   data.forEach((item) => {
-    // 전체 데이터에서 원래 인덱스 찾기
     const realIndex = allData.indexOf(item);
     const isAdded = compareList.includes(realIndex);
 
@@ -64,13 +63,12 @@ function toggleCompare(index) {
     }
     compareList.push(index);
   }
-  // 로컬스토리지에 저장해서 페이지 이동 후에도 유지
   localStorage.setItem('compareList', JSON.stringify(compareList));
   updateCompareBadge();
   applyFilter();
 }
 
-// 상단 비교 버튼 뱃지 업데이트
+// 상단 비교 뱃지 업데이트
 function updateCompareBadge() {
   const badge = document.getElementById('compare-badge');
   if (badge) {
@@ -79,14 +77,18 @@ function updateCompareBadge() {
   }
 }
 
-// 필터 조건에 맞게 데이터 걸러내기
+// 모든 필터 + 검색어 적용
 function applyFilter() {
+  const search = document.getElementById('search-univ').value.trim();
   const type = document.getElementById('filter-type').value;
   const method = document.getElementById('filter-method').value;
   const suneung = document.getElementById('filter-suneung').value;
   const changed = document.getElementById('filter-changed').checked;
 
   let result = allData;
+
+  // 대학명 검색 (입력값이 포함된 대학만 표시)
+  if (search) result = result.filter(d => d.university.includes(search));
   if (type) result = result.filter(d => d.type === type);
   if (method) result = result.filter(d => d.method.includes(method));
   if (suneung) result = result.filter(d => d.suneung === suneung);
@@ -95,7 +97,8 @@ function applyFilter() {
   render(result);
 }
 
-// 필터 값이 바뀔 때마다 자동으로 적용
+// 필터/검색 이벤트 연결
+document.getElementById('search-univ').addEventListener('input', applyFilter);
 document.getElementById('filter-type').addEventListener('change', applyFilter);
 document.getElementById('filter-method').addEventListener('change', applyFilter);
 document.getElementById('filter-suneung').addEventListener('change', applyFilter);
