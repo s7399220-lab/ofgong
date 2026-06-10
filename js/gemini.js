@@ -1,18 +1,29 @@
 // Gemini API 공통 호출 함수
 async function callGemini(prompt) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${CONFIG.GEMINI_API_KEY}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${CONFIG.GEMINI_API_KEY}`;
 
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }]
+      contents: [{
+        parts: [{ text: prompt }]
+      }],
+      generationConfig: {
+        temperature: 0.7,
+        maxOutputTokens: 1024,
+      }
     })
   });
 
+  if (!res.ok) {
+    const err = await res.json();
+    console.error('Gemini API 오류:', err);
+    throw new Error(err.error?.message || 'API 오류');
+  }
+
   const data = await res.json();
 
-  // 응답에서 텍스트 추출
   if (data.candidates && data.candidates[0]) {
     return data.candidates[0].content.parts[0].text;
   }
