@@ -622,3 +622,19 @@ body {
   .credit-grid { grid-template-columns: 1fr; }
   .type-grid { grid-template-columns: 1fr; }
 }
+/* 태그 목록 */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.guide-tag {
+  font-size: 0.8rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: #f0fdf4;
+  color: var(--primary-dark);
+  border: 1px solid #a7f3d0;
+  font-weight: 500;
+}
