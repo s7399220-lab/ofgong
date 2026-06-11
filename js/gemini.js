@@ -33,7 +33,8 @@ async function callGemini(prompt) {
 // 마크다운 → HTML 변환
 function parseMarkdown(text) {
   return text
-    // 제목 (### ## #)
+    // 제목 (#### ### ## #)
+    .replace(/^#### (.*$)/gm, '<h4 style="margin:14px 0 6px; color:var(--primary-dark);">$1</h4>')
     .replace(/^### (.*$)/gm, '<h4 style="margin:14px 0 6px; color:var(--primary-dark);">$1</h4>')
     .replace(/^## (.*$)/gm, '<h3 style="margin:16px 0 8px; color:var(--primary-dark);">$1</h3>')
     .replace(/^# (.*$)/gm, '<h3 style="margin:16px 0 8px; color:var(--primary-dark);">$1</h3>')
