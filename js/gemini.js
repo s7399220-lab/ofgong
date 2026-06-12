@@ -1,5 +1,5 @@
-// Gemini API 공통 호출 함수
-async function callGemini(prompt) {
+// Gemini API 공통 호출 함수 (503 시 자동 재시도)
+async function callGemini(prompt, retry = 0) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${CONFIG.GEMINI_API_KEY}`;
 
   const res = await fetch(url, {
@@ -17,6 +17,11 @@ async function callGemini(prompt) {
   });
 
   if (!res.ok) {
+    // 503(서버 과부하)이면 2초 기다렸다가 최대 3번까지 재시도
+    if (res.status === 503 && retry < 3) {
+      await new Promise(r => setTimeout(r, 2000));
+      return callGemini(prompt, retry + 1);
+    }
     const err = await res.json();
     console.error('Gemini API 오류:', err);
     throw new Error(err.error?.message || 'API 오류');
